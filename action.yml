@@ -1,6 +1,6 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
+name: Dependency Bump Action
+description: Automatically update dependencies and create a PR
+author: jbigman
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
@@ -9,16 +9,86 @@ branding:
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  token:
+    description: 'GitHub token for authentication and PR creation'
     required: true
-    default: '1000'
+  ncu-options:
+    description: 'NPM Check Updates options'
+    required: false
+    default: '-u'
 
 # Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
+  pr_number:
+    description: 'Number of the created pull request'
+    value: ${{ steps.create_pr.outputs.pull-request-number }}
 
 runs:
-  using: node20
-  main: dist/index.js
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ inputs.token }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Upgrade dependencies
+      run: |
+        npm install npm-check-updates --no-save
+        npx ncu -u
+      shell: bash
+
+    - name: Create branch
+      id: create_branch
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        BRANCH_NAME="bump-dependencies-$(date +'%Y-%m-%d-%H-%M-%S')"
+        git checkout -b $BRANCH_NAME
+        git push origin $BRANCH_NAME
+        echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Check for changes
+      id: git-check
+      run: |
+        DIFF_OUTPUT=$(git diff package.json package-lock.json)
+        if [[ ${#DIFF_OUTPUT} -gt 0 ]]; then
+          echo "CHANGED=true" >> $GITHUB_ENV
+          echo "DIFF_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$DIFF_OUTPUT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        else
+          echo "CHANGED=false" >> $GITHUB_ENV
+        fi
+      shell: bash
+
+    - name: Process Git Diff
+      id: process-diff
+      uses: dist/index.js
+      with:
+        git-diff: '${{ env.DIFF_OUTPUT }}'
+
+    - name: Create Pull Request
+      if: env.CHANGED == 'true'
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ inputs.token }}
+        title: 'Bump dependencies (${{ steps.process-diff.outputs.LIBS }})'
+        body: |
+          Automated dependency update  
+          [View Workflow Run](https://${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          ### Updated Dependencies:
+          ```
+          ${{ steps.process-diff.outputs.DIFF }}
+          ```
+        branch: ${{ steps.create_branch.outputs.BRANCH_NAME }}
+        base: 'main'
+        commit-message: 'chore: bump dependencies'
+        draft: false
