@@ -20,8 +20,7 @@ const { run } = await import('../src/main.js')
 describe('main.ts', () => {
   beforeEach(() => {
     // Set the action's inputs as return values from core.getInput().
-    core.getInput.mockImplementation(
-      () => `diff --git a/package.json b/package.json
+    process.env.GIT_DIFF = `diff --git a/package.json b/package.json
 index 78e4311..c9e63ff 100644
 --- a/package.json
 +++ b/package.json
@@ -32,7 +31,6 @@ index 78e4311..c9e63ff 100644
 @@ -8 +9 @@
 -}
 +}`
-    )
 
     // Mock the wait function so that it does not actually wait.
     parseDiff.mockImplementation(() => {

@@ -14,7 +14,12 @@ export async function run(): Promise<void> {
     // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
     // core.debug(`Waiting ${ms} milliseconds ...`);
 
-    const diff: string = core.getInput('GIT_DIFF')
+    //const diff: string = core.getInput('GIT_DIFF')
+    const diff = process.env.GIT_DIFF || 'EMPTY'
+
+    if (diff === 'EMPTY') {
+      throw new Error('GIT_DIFF is empty')
+    }
     console.log(`MAIN=${diff}`)
     // const rawResult = execSync("git diff --unified=0 package.json").toString();
     // console.log(`rawResult=${rawResult}`);
