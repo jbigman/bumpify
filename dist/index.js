@@ -27283,7 +27283,7 @@ async function run() {
         // const nodeCheckerUpdaterOptions: string = core.getInput("ncu-options");
         // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
         // core.debug(`Waiting ${ms} milliseconds ...`);
-        const diff = coreExports.getInput('git-diff');
+        const diff = coreExports.getInput('GIT_DIFF');
         console.log(`MAIN=${diff}`);
         // const rawResult = execSync("git diff --unified=0 package.json").toString();
         // console.log(`rawResult=${rawResult}`);

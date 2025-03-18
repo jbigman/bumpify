@@ -72,8 +72,8 @@ runs:
       id: process-diff
       run: node dist/index.js
       shell: bash
-      with:
-        git-diff: '${{ env.DIFF_OUTPUT }}'
+      env:
+        GIT_DIFF: '${{ env.DIFF_OUTPUT }}'
 
     - name: Create Pull Request
       if: env.CHANGED == 'true'
