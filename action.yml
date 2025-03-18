@@ -57,7 +57,7 @@ runs:
     - name: Check for changes
       id: git-check
       run: |
-        DIFF_OUTPUT=$(git diff package.json package-lock.json)
+        DIFF_OUTPUT=$(git diff package.json)
         if [[ ${#DIFF_OUTPUT} -gt 0 ]]; then
           echo "CHANGED=true" >> $GITHUB_ENV
           echo "DIFF_OUTPUT<<EOF" >> $GITHUB_ENV
