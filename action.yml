@@ -68,12 +68,16 @@ runs:
         fi
       shell: bash
 
+    - name: Debug GIT_DIFF
+      run: echo "GIT_DIFF=${{ env.DIFF_OUTPUT }}"
+      shell: bash
+
     - name: Process Git Diff
       id: process-diff
       run: node ${{ github.action_path }}/dist/index.js
       shell: bash
       env:
-        GIT_DIFF: '${{ env.DIFF_OUTPUT }}'
+        GIT_DIFF: ${{ env.DIFF_OUTPUT }}
 
     - name: Create Pull Request
       if: env.CHANGED == 'true'
