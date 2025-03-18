@@ -87,7 +87,7 @@ runs:
         title: 'Bump dependencies (${{ steps.process-diff.outputs.LIBS }})'
         body: |
           Automated dependency update  
-          [View Workflow Run](https://${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          [View Workflow Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
           ### Updated Dependencies:
           ```
