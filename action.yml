@@ -70,7 +70,8 @@ runs:
 
     - name: Process Git Diff
       id: process-diff
-      uses: dist/index.js
+      run: node dist/index.js
+      shell: bash
       with:
         git-diff: '${{ env.DIFF_OUTPUT }}'
 
