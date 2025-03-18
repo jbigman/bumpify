@@ -70,7 +70,7 @@ runs:
 
     - name: Process Git Diff
       id: process-diff
-      run: node dist/index.js
+      run: node ${{ github.action_path }}/dist/index.js
       shell: bash
       env:
         GIT_DIFF: '${{ env.DIFF_OUTPUT }}'
