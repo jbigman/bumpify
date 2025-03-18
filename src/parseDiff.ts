@@ -12,11 +12,11 @@ export const parseDiff = (diff: string): { DIFF: string; LIBS: string } => {
   const updates = []
   const libs = []
 
-  for (let i = 0; i < diffOutput.length; i += 2) {
-    if (diffOutput[i] && diffOutput[i + 1]) {
-      const oldDep = diffOutput[i].replace('- "', '').trim()
-      const newDep = diffOutput[i + 1].replace('+ "', '').trim()
-      const name = oldDep.split('":')[0] // Extract package name
+  for (let lineNumber = 0; lineNumber < diffOutput.length; lineNumber += 2) {
+    if (diffOutput[lineNumber] && diffOutput[lineNumber + 1]) {
+      const oldDep = diffOutput[lineNumber].replace('- "', '').trim()
+      const newDep = diffOutput[lineNumber + 1].replace('+ "', '').trim()
+      const name = oldDep.split('"')[1] // Extract package name
       if (name) {
         updates.push(
           `${name}: ${oldDep.split('":')[1]} => ${newDep.split('":')[1]}`

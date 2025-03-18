@@ -18,8 +18,8 @@ index 78e4311..c9e63ff 100644
 +}`
 
     const { DIFF, LIBS } = parseDiff(input)
-    expect(DIFF).toBe(`-    "axios:  "^1.8.0" =>  "^1.8.3",`)
-    expect(LIBS).toBe('-    "axios')
+    expect(DIFF).toBe(`axios:  "^1.8.0" =>  "^1.8.3",`)
+    expect(LIBS).toBe('axios')
   })
 
   it('Test with empty diff', async () => {
