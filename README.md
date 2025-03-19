@@ -4,7 +4,7 @@
 ![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
 [![Check dist/](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/check-dist.yml)
 [![CodeQL](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/typescript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)﻿
+[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
 
 ## Purpose
 
@@ -43,7 +43,7 @@ Full example [here](https://github.com/jbigman/bumpify-example)
 | `ncu-options` | Any string that could fit with [raineorshine/npm-check-updates](https://github.com/raineorshine/npm-check-updates?tab=readme-ov-file#options) cli.<br> If you want only a bump on minor or patch, set : `-u -t minor` or `-u -t patch` | `-u`    |
 | `token`       | The token that the action will use to checkout branch and create pull request. See [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request?tab=readme-ov-file#token)                                      |         |
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Check out personal access token constraints described here:
 > [peter-evans/create-pull-request/#token](https://github.com/peter-evans/create-pull-request?tab=readme-ov-file#token)
 
