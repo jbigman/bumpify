@@ -1,7 +1,7 @@
 {
   "name": "bumpify",
   "description": "GitHub Actions to bump package.json dependencies",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "jbiman",
   "type": "module",
   "private": true,
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "bundle": "npm run format:write && npm run package",
-    "ci-test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
+    "ci-test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest",
     "coverage": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
