@@ -52,10 +52,15 @@ index 78e4311..c9e63ff 100644
     expect(core.setOutput).toHaveBeenCalledTimes(2)
     expect(core.setOutput).toHaveBeenCalledWith(
       'DIFF',
-      // Simple regex to match a time string in the format HH:MM:SS.
       '    "axios:  "^1.8.0" =>  "^1.8.3",'
     )
 
     expect(core.setOutput).toHaveBeenCalledWith('LIBS', '    "axios')
+  })
+  it('Check that it fails if git diff is empty', async () => {
+    process.env.GIT_DIFF = ''
+    await run()
+
+    expect(core.setFailed).toHaveBeenNthCalledWith(1, 'GIT_DIFF is empty')
   })
 })
