@@ -57,8 +57,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          token: "${{ secrets.GITHUB_TOKEN}}"
-          ncu-options: "-u"
+          token: '${{ secrets.GITHUB_TOKEN}}'
+          ncu-options: '-u'
 
       - name: Print Output
         id: output
