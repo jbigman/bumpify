@@ -57,7 +57,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          token: '${{ secrets.GITHUB_TOKEN}}'
+          token: '${{ secrets.BUMPIFY_TOKEN }}'
           ncu-options: '-u'
 
       - name: Print Output
