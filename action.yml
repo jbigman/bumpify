@@ -41,6 +41,7 @@ runs:
       run: |
         npm install npm-check-updates --no-save
         npx ncu -u
+        npm install
       shell: bash
 
     - name: Create branch
